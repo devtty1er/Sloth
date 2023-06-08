@@ -1,5 +1,5 @@
 diff --git a/accel/tcg/tcg-runtime.h b/accel/tcg/tcg-runtime.h
-index 4eda24e..3675074 100644
+index 4eda24e63a..3675074fd1 100644
 --- a/accel/tcg/tcg-runtime.h
 +++ b/accel/tcg/tcg-runtime.h
 @@ -320,3 +320,4 @@ DEF_HELPER_FLAGS_4(gvec_leu32, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
@@ -8,7 +8,7 @@ index 4eda24e..3675074 100644
  DEF_HELPER_FLAGS_5(gvec_bitsel, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
 +DEF_HELPER_FLAGS_1(afl_maybe_log, TCG_CALL_NO_RWG, void, tl)
 diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
-index 2d83013..5d91dad 100644
+index 2d83013633..5d91dad3e4 100644
 --- a/accel/tcg/translate-all.c
 +++ b/accel/tcg/translate-all.c
 @@ -58,6 +58,60 @@
@@ -81,7 +81,7 @@ index 2d83013..5d91dad 100644
      tcg_ctx->cpu = NULL;
  
 diff --git a/configure b/configure
-index 2acc4d1..650afa1 100755
+index 2acc4d1465..650afa1f93 100755
 --- a/configure
 +++ b/configure
 @@ -6821,8 +6821,8 @@ echo_version() {
@@ -105,7 +105,7 @@ index 2acc4d1..650afa1 100755
  if test "$sparse" = "yes" ; then
    echo "CC           := REAL_CC=\"\$(CC)\" cgcc"       >> $config_host_mak
 diff --git a/linux-user/Makefile.objs b/linux-user/Makefile.objs
-index 1940910..de02732 100644
+index 1940910a73..de02732a88 100644
 --- a/linux-user/Makefile.objs
 +++ b/linux-user/Makefile.objs
 @@ -1,7 +1,8 @@
@@ -119,7 +119,7 @@ index 1940910..de02732 100644
  obj-$(TARGET_HAS_BFLT) += flatload.o
  obj-$(TARGET_I386) += vm86.o
 diff --git a/linux-user/aarch64/cpu_loop.c b/linux-user/aarch64/cpu_loop.c
-index bbe9fef..55a45f7 100644
+index bbe9fefca8..55a45f7d9e 100644
 --- a/linux-user/aarch64/cpu_loop.c
 +++ b/linux-user/aarch64/cpu_loop.c
 @@ -138,6 +138,8 @@ void cpu_loop(CPUARMState *env)
@@ -154,7 +154,7 @@ index bbe9fef..55a45f7 100644
      for (i = 1; i < 4; ++i) {
 diff --git a/linux-user/config.h b/linux-user/config.h
 new file mode 100644
-index 0000000..5d0235b
+index 0000000000..5d0235bef9
 --- /dev/null
 +++ b/linux-user/config.h
 @@ -0,0 +1,13 @@
@@ -173,7 +173,7 @@ index 0000000..5d0235b
 +#endif
 diff --git a/linux-user/elfParser.c b/linux-user/elfParser.c
 new file mode 100644
-index 0000000..55b2dc6
+index 0000000000..55b2dc6607
 --- /dev/null
 +++ b/linux-user/elfParser.c
 @@ -0,0 +1,345 @@
@@ -525,7 +525,7 @@ index 0000000..55b2dc6
 \ No newline at end of file
 diff --git a/linux-user/elfParser.h b/linux-user/elfParser.h
 new file mode 100644
-index 0000000..f122954
+index 0000000000..f122954c6a
 --- /dev/null
 +++ b/linux-user/elfParser.h
 @@ -0,0 +1,6 @@
@@ -537,7 +537,7 @@ index 0000000..f122954
 +#endif
 \ No newline at end of file
 diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index fe9dfe7..a5002ac 100644
+index fe9dfe795d..a5002acea8 100644
 --- a/linux-user/elfload.c
 +++ b/linux-user/elfload.c
 @@ -2948,7 +2948,8 @@ int load_elf_binary(struct linux_binprm *bprm, struct image_info *info)
@@ -565,7 +565,7 @@ index fe9dfe7..a5002ac 100644
 +}
 \ No newline at end of file
 diff --git a/linux-user/linuxload.c b/linux-user/linuxload.c
-index a27e1d0..538edaa 100644
+index a27e1d0d8b..538edaa4bc 100644
 --- a/linux-user/linuxload.c
 +++ b/linux-user/linuxload.c
 @@ -159,7 +159,8 @@ int loader_exec(int fdexec, const char *filename, char **argv, char **envp,
@@ -579,7 +579,7 @@ index a27e1d0..538edaa 100644
      }
  
 diff --git a/linux-user/main.c b/linux-user/main.c
-index 75c9785..ba674c0 100644
+index 75c9785157..ba674c02e0 100644
 --- a/linux-user/main.c
 +++ b/linux-user/main.c
 @@ -47,6 +47,8 @@
@@ -686,7 +686,7 @@ index 75c9785..ba674c0 100644
      return 0;
  }
 diff --git a/linux-user/qemu.h b/linux-user/qemu.h
-index 5c96438..795244a 100644
+index 5c964389c1..36a536e349 100644
 --- a/linux-user/qemu.h
 +++ b/linux-user/qemu.h
 @@ -40,6 +40,7 @@ struct image_info {
@@ -697,7 +697,7 @@ index 5c96438..795244a 100644
          abi_ulong       code_offset;
          abi_ulong       data_offset;
          abi_ulong       saved_auxv;
-@@ -721,4 +722,9 @@ void preexit_cleanup(CPUArchState *env, int code);
+@@ -721,4 +722,8 @@ void preexit_cleanup(CPUArchState *env, int code);
  #include "target_cpu.h"
  #include "target_structs.h"
  
@@ -706,9 +706,8 @@ index 5c96438..795244a 100644
 +void run_linker(struct target_pt_regs *regs, struct image_info *infop);
 +
  #endif /* QEMU_H */
-+
 diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 9e8ed42..728d5ec 100644
+index 9e8ed423ea..728d5ec6ee 100644
 --- a/target/arm/cpu.h
 +++ b/target/arm/cpu.h
 @@ -262,6 +262,11 @@ typedef struct CPUARMState {
@@ -724,7 +723,7 @@ index 9e8ed42..728d5ec 100644
      uint32_t CF; /* 0 or 1 */
      uint32_t VF; /* V is the bit 31. All other bits are undefined */
 diff --git a/target/arm/translate-a64.c b/target/arm/translate-a64.c
-index 534c3ff..bec4b57 100644
+index 534c3ff5f3..bec4b573ca 100644
 --- a/target/arm/translate-a64.c
 +++ b/target/arm/translate-a64.c
 @@ -14543,6 +14543,13 @@ static void disas_a64_insn(CPUARMState *env, DisasContext *s)
@@ -742,7 +741,7 @@ index 534c3ff..bec4b57 100644
      s->insn = insn;
      s->base.pc_next += 4;
 diff --git a/util/path.c b/util/path.c
-index 8e174eb..56117f3 100644
+index 8e174eb436..56117f3b89 100644
 --- a/util/path.c
 +++ b/util/path.c
 @@ -9,6 +9,7 @@
@@ -763,3 +762,54 @@ index 8e174eb..56117f3 100644
  
          /* Look for the path; record the result, pass or fail.  */
          if (access(full, F_OK) == 0) {
+diff --git a/util/selfmap.c b/util/selfmap.c
+index 2ec99dfdda..2c14f019ce 100644
+--- a/util/selfmap.c
++++ b/util/selfmap.c
+@@ -23,29 +23,34 @@ GSList *read_self_maps(void)
+             gchar **fields = g_strsplit(lines[i], " ", 6);
+             if (g_strv_length(fields) > 4) {
+                 MapInfo *e = g_new0(MapInfo, 1);
+-                int errors;
++                int errors = 0;
+                 const char *end;
+ 
+-                errors  = qemu_strtoul(fields[0], &end, 16, &e->start);
+-                errors += qemu_strtoul(end + 1, NULL, 16, &e->end);
++                errors |= qemu_strtoul(fields[0], &end, 16, &e->start);
++                errors |= qemu_strtoul(end + 1, NULL, 16, &e->end);
+ 
+                 e->is_read  = fields[1][0] == 'r';
+                 e->is_write = fields[1][1] == 'w';
+                 e->is_exec  = fields[1][2] == 'x';
+                 e->is_priv  = fields[1][3] == 'p';
+ 
+-                errors += qemu_strtoul(fields[2], NULL, 16, &e->offset);
++                errors |= qemu_strtoul(fields[2], NULL, 16, &e->offset);
+                 e->dev = g_strdup(fields[3]);
+-                errors += qemu_strtou64(fields[4], NULL, 10, &e->inode);
++                errors |= qemu_strtou64(fields[4], NULL, 10, &e->inode);
+ 
+-                /*
+-                 * The last field may have leading spaces which we
+-                 * need to strip.
+-                 */
+-                if (g_strv_length(fields) == 6) {
+-                    e->path = g_strdup(g_strchug(fields[5]));
++                if (!errors) {
++                    /*
++                     * The last field may have leading spaces which we
++                     * need to strip.
++                     */
++                    if (g_strv_length(fields) == 6) {
++                        e->path = g_strdup(g_strchug(fields[5]));
++                    }
++                    map_info = g_slist_prepend(map_info, e);
++                } else {
++                    g_free(e->dev);
++                    g_free(e);
+                 }
+-                map_info = g_slist_prepend(map_info, e);
+             }
+ 
+             g_strfreev(fields);

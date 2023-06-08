@@ -1,0 +1,4 @@
+[submodule "resources/qemu"]
+	path = resources/qemu
+	url = https://github.com/qemu/qemu
+	ignore = dirty

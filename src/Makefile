@@ -3,7 +3,7 @@ CFLAGS = -pthread -g -Wall -fPIC -ldl
 all : sloth
 
 libqemu.o:
-	cd qemu && CC=clang CXX=clang++ CXXFLAGS=-fPIC ./configure --enable-linux-user --disable-system --disable-docs --disable-bsd-user --disable-gtk --disable-sdl --disable-vnc --target-list=aarch64-linux-user && make && cd -
+	cd qemu && CFLAGS=-Wno-unused-variable CC=clang CXX=clang++ CXXFLAGS=-fPIC ./configure --enable-linux-user --disable-system --disable-docs --disable-bsd-user --disable-gtk --disable-sdl --disable-vnc --target-list=aarch64-linux-user && make && cd -
 
 libfuzzer.a: 
 	cd fuzzer && ./build.sh && cd -
@@ -18,3 +18,4 @@ sloth: libqemu.o libfuzzer.a sloth.o
 clean:
 	cd libQemu && make clean && cd -
 	rm sloth
+

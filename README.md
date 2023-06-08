@@ -1,5 +1,39 @@
-# Sloth 🦥
-   Sloth is a fuzzing setup that makes use of libFuzzer and QEMU’s user-mode emulation (`qemu/linux-user`) on x86_64/aarch64 host to emulate aarch64 Android libraries to fuzz the target Android native library.
+# dev
+
+This is [my](https://github.com/devtty1er) `dev` environment for Sloth (forked from [ant4g0nist/Sloth](https://github.com/ant4g0nist/Sloth)). There are a few additions in this branch that should not be upstreamed, such as a `dev.Dockerfile`, `docker-compose.yml`, `.vscode/` debugging configurations and `scripts/` to generate/apply libfuzzer and qemu patches. Feature branches should be forked from `dev` and appropriate deltas should be cherrypicked for PR staging.
+
+**A quick note on submodules and patches:**
+TODO
+
+[See the `main` branch README](https://github.com/devtty1er/Sloth)
+
+## Usage
+
+```bash
+# clone
+git clone
+git submodule init && git submodule update
+cd ./resources/qemu/ && git checkout tags/v5.1.0 \
+  || echo "Failed to checkout qemu to specific tag" >&2
+cd ../ && \
+  svn checkout https://github.com/llvm/llvm-project/branches/release/12.x/compiler-rt/lib/fuzzer \
+  || echo "Failed to svn checkout libfuzzer" >&2
+cd ../
+
+# apply qemu patch
+
+# apply libfuzzer patch
+
+# build qemu
+CFLAGS="-Wno-unused-command-line-argument -Wno-unused-but-set-variable" CC=clang CXX=clang++ CXXFLAGS=-fPIC ./configure --enable-linux-user --disable-system --disable-docs --disable-bsd-user --disable-gtk --disable-sdl --disable-vnc --target-list=aarch64-linux-user && make
+
+# generate qemu patch from v5.1.0
+./scripts/generate_qemu_patch.sh > ./patches/qemu.patch
+# generate libfuzzer patch from llvmorg-12.0.1
+./scripts/generate_libfuzzer_patch.sh > ./patches/libfuzzer.patch
+
+
+```
 
 # Introduction
 Sloth makes use of libFuzzer and QEMU’s user-mode emulation (`qemu/linux-user`) on x86_64/aarch64 host to emulate aarch64 Android libraries to fuzz the target Android native library. Internals of why and how about Sloth are available at : https://fuzzing.science/page/fuzzing-android-native-libraries-with-libfuzzer-qemu/
