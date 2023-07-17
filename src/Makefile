@@ -3,7 +3,7 @@ CFLAGS = -pthread -g -Wall -fPIC -ldl
 all : sloth
 
 ../resources/qemu/qemu-aarch64: 
-	cd ../resources/qemu && CFLAGS=-Wno-unused-variable CC=clang CXX=clang++ CXXFLAGS=-fPIC ./configure --enable-linux-user --disable-system --disable-docs --disable-bsd-user --disable-gtk --disable-sdl --disable-vnc --target-list=aarch64-linux-user && make && cd -
+	cd ../resources/qemu && CFLAGS="-Wno-unused-command-line-argument  -Wno-unused-but-set-variable" CC=clang CXX=clang++ CXXFLAGS=-fPIC ./configure --enable-linux-user --disable-system --disable-docs --disable-bsd-user --disable-gtk --disable-sdl --disable-vnc --target-list=aarch64-linux-user && make && cd -
 
 ../resources/fuzzer/libfuzzer.a: 
 	cd ../resources/fuzzer && ./build.sh && cd -
