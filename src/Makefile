@@ -11,7 +11,7 @@ all : sloth
 sloth.o: sloth.c
 	clang sloth.c -c -o $@
 
-sloth: ../resources/qemu/qemu-aarch64 ../resources/fuzzer/libfuzzer.a sloth.o
+sloth: ../resources/qemu/aarch64-linux-user/qemu-aarch64 ../resources/fuzzer/libfuzzer.a sloth.o
 	clang++ $(CFLAGS) sloth.o ../resources/qemu/aarch64-linux-user/qemu-aarch64 ../resources/fuzzer/libFuzzer.a -o $@
 	rm sloth.o
 
