@@ -1,6 +1,6 @@
 # dev
 
-This is [my](https://github.com/devtty1er) `dev` environment for Sloth (forked from [ant4g0nist/Sloth](https://github.com/ant4g0nist/Sloth)). There are a few additions in this branch that should not be upstreamed, such as a `dev.Dockerfile`, `docker-compose.yml`, `.vscode/` debugging configurations and `scripts/` to generate/apply libfuzzer and qemu patches. Feature branches should be forked from `dev` and appropriate deltas should be cherrypicked for PR staging.
+This is [my](https://github.com/devtty1er) `dev` environment for Sloth (forked from [ant4g0nist/Sloth](https://github.com/ant4g0nist/Sloth)). There are a few additions in this branch that should not be upstreamed, such as a `dev.Dockerfile`, `docker-compose.yml`, `.vscode/` debugging configurations and `scripts/` to generate/apply qemu patches. Feature branches should be forked from `dev` and appropriate deltas should be cherrypicked for PR staging.
 
 **A quick note on submodules and patches:**
 TODO
